@@ -7,8 +7,11 @@ game.PlayScreen = me.ScreenObject.extend({
 		game.data.score = 0;
                 me.levelDirector.loadLevel("map1");
                 
-                var player = me.pool.pull("player", 0, 420, {});
+               var player = me.pool.pull("player", 0, 420, {});
                 me.game.world.addChild(player, 5);
+                
+                var player2 = me.pool.pull("player2", 1000, 420, {});
+                me.game.world.addChild(player2, 5);
 		// add our HUD to the game world
 		this.HUD = new game.HUD.Container();
 		me.game.world.addChild(this.HUD);
@@ -22,7 +25,12 @@ game.PlayScreen = me.ScreenObject.extend({
                 me.input.bindKey(me.input.KEY.UP, "up");
                 me.input.bindKey(me.input.KEY.SPACE, "space");
                 me.input.bindKey(me.input.KEY.SHIFT, "attack");
-            
+                me.input.bindKey(me.input.KEY.D, "right2");
+                me.input.bindKey(me.input.KEY.A, "left2");
+                me.input.bindKey(me.input.KEY.W, "up2");
+                me.input.bindKey(me.input.KEY.E, "space2");
+                me.input.bindKey(me.input.KEY.G, "attack2");
+           
 	},
 
 
