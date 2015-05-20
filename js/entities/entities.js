@@ -12,10 +12,10 @@ init: function(x, y, settings) {
             }
 
         }]);
-     this.body.setVelocity(5, 0);
+     this.body.setVelocity(5, 20);
      this.health = 20;
         
-     
+     this.type = "player1";
      this.renderable.addAnimation("idle", [0]);
         this.renderable.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 80);
         this.renderable.addAnimation("attack", [9, 10, 11, 12], 100);
@@ -79,7 +79,7 @@ init: function(x, y, settings) {
         this.now = new Date().getTime();
         this.dead = this.checkIfDead();
         me.collision.check(this, true, this.collideHandler.bind(this), true);
-        this.body.update(delta);
+        
          
         this._super(me.Entity, "update", [delta]);
         return true;
@@ -139,7 +139,7 @@ init: function(x, y, settings) {
             }
 
         }]);
-     this.body.setVelocity(5, 0);
+     this.body.setVelocity(5, 20);
      
      this.renderable.addAnimation("idle", [0]);
         this.renderable.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 80);
@@ -202,7 +202,7 @@ init: function(x, y, settings) {
             this.renderable.setCurrentAnimation("idle");
         }
          this.body.update(delta);
-         
+         me.collision.check(this, true, this.collideHandler.bind(this), true);
         this._super(me.Entity, "update", [delta]);
         return true;
         this.attacking = me.input.isKeyPressed("attack");      
@@ -219,22 +219,25 @@ init: function(x, y, settings) {
         this.health = this.health - damage;
     },
     collideHandler: function(response) {
-        
-      if (response.b.type === 'player') {
+      if (response.b.type === 'player1') {
             this.collideWithPlayer1(response);
         }
     },
      collideWithPlayer1: function(response) {
         var xdif = this.pos.x - response.b.pos.x;
         var ydif = this.pos.y - response.b.pos.y;
-        if (xdif > 0) {
+        
+        console.log( xdif + this.facing);
+        if (xdif < 120) {
             this.pos.x = this.pos.x + 1;
-            if (this.facing === "left") {
+            if (this.facing == "left") {
+                console.log("hihkhl");
                 this.body.vel.x = 0;
             }
         } else {
             this.pos.x = this.pos.x - 1;
-            if (this.facing === "right") {
+            if (this.facing == "right") {
+                console.log( "gyusdfjys");
                 this.body.vel.x = 0;
             }
         }
