@@ -1,37 +1,41 @@
 game.PlayerEntity = me.Entity.extend({
-init: function(x, y, settings) {
-    this._super(me.Entity, 'init', [x, y, {
-            image: "player",
-            width: 64,
-            height: 64,
-            spritewidth: "120",
-            spriteheight: "120",
-          
-            getShape: function() {
-                return(new me.Rect(0, 0, 120, 120)).toPolygon();
-            }
+    init: function(x, y, settings) {
+        this._super(me.Entity, 'init', [x, y, {
+                image: "player",
+                width: 64,
+                height: 64,
+                spritewidth: "120",
+                spriteheight: "120",
+                getShape: function() {
+                    return(new me.Rect(0, 0, 120, 120)).toPolygon();
+                }
 
-        }]);
-     this.body.setVelocity(5, 20);
-     this.health = 20;
-        
-     this.type = "player1";
-     this.renderable.addAnimation("idle", [0]);
+            }]);
+        this.body.setVelocity(5, 20);
+        this.health = 20;
+
+        this.type = "player1";
+        this.renderable.addAnimation("idle", [0]);
         this.renderable.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 80);
         this.renderable.addAnimation("attack", [9, 10, 11, 12], 100);
-        
+
         this.renderable.setCurrentAnimation("idle");
-        
-         this.facing = "right";
+
+        this.facing = "right";
         this.dead = false;
         this.attacking = false;
-        
+
         this.now = new Date().getTime();
         this.lastHit = this.now;
         this.lastAttack = new Date().getTime();
-},
-        update: function(delta) {
-         if (me.input.isKeyPressed("right")) {
+    },
+    
+    loseHealth: function(damage) {
+        this.health = this.health - damage;
+    },
+    
+    update: function(delta) {
+        if (me.input.isKeyPressed("right")) {
             //flip on x axis
             this.flipX(false);
             this.body.vel.x += this.body.accel.x * me.timer.tick;
@@ -74,41 +78,35 @@ init: function(x, y, settings) {
         } else {
             this.renderable.setCurrentAnimation("idle");
         }
-         this.body.update(delta);
-         
+        if (this.health <= 0) {
+            me.game.world.removeChild(this);
+        }
         this.now = new Date().getTime();
-        this.dead = this.checkIfDead();
+
         me.collision.check(this, true, this.collideHandler.bind(this), true);
         
-         
+        this.body.update(delta);
+
         this._super(me.Entity, "update", [delta]);
         return true;
-        this.attacking = me.input.isKeyPressed("attack");      
-      },
-      checkIfDead: function() {
-        if (this.health <= 0) {
-            return true;
-        }
-
-        return false;
     },
-    loseHealth: function(damage) {
-        this.health = this.health - damage;
-    },
+    
     collideHandler: function(response) {
-    if (response.b.type === 'player2') {
+        if (response.b.type === 'player2') {
             this.collideWithPlayer2(response);
         }
     },
-     collideWithPlayer2: function(response) {
+    
+    collideWithPlayer2: function(response) {
         var xdif = this.pos.x - response.b.pos.x;
         var ydif = this.pos.y - response.b.pos.y;
-        if (xdif > 0) {
+        if (xdif < 90) {
             this.pos.x = this.pos.x + 1;
             if (this.facing === "left") {
                 this.body.vel.x = 0;
             }
-        } else {
+        }
+        if (xdif > -90) {
             this.pos.x = this.pos.x - 1;
             if (this.facing === "right") {
                 this.body.vel.x = 0;
@@ -122,43 +120,48 @@ init: function(x, y, settings) {
             response.b.loseHealth(1);
         }
     }
-      
-  });
-  
-  game.PlayerEntity2 = me.Entity.extend({
-init: function(x, y, settings) {
-    this._super(me.Entity, 'init', [x, y, {
-            image: "player2",
-            width: 64,
-            height: 64,
-            spritewidth: "120",
-            spriteheight: "120",
-          
-            getShape: function() {
-                return(new me.Rect(0, 0, 120, 120)).toPolygon();
-            }
 
-        }]);
-     this.body.setVelocity(5, 20);
-     
-     this.renderable.addAnimation("idle", [0]);
+});
+
+game.PlayerEntity2 = me.Entity.extend({
+    init: function(x, y, settings) {
+        this._super(me.Entity, 'init', [x, y, {
+                image: "player2",
+                width: 64,
+                height: 64,
+                spritewidth: "120",
+                spriteheight: "120",
+                getShape: function() {
+                    return(new me.Rect(0, 0, 120, 120)).toPolygon();
+                }
+
+            }]);
+        this.body.setVelocity(5, 20);
+
+        this.renderable.addAnimation("idle", [0]);
         this.renderable.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 80);
         this.renderable.addAnimation("attack", [9, 10, 11, 12], 100);
-        
+
         this.renderable.setCurrentAnimation("idle");
-        
+
         this.facing = "left";
         this.dead = false;
         this.attacking = false;
-        
+
         this.health = 20;
-        
+
         this.now = new Date().getTime();
         this.lastHit = this.now;
         this.lastAttack = new Date().getTime();
-},
-        update: function(delta) {
-         if (me.input.isKeyPressed("right2")) {
+        this.type = "player2"
+    },
+    
+    loseHealth: function(damage) {
+        this.health = this.health - damage;
+    },
+    
+    update: function(delta) {
+        if (me.input.isKeyPressed("right2")) {
             //flip on x axis
             this.flipX(false);
             this.body.vel.x += this.body.accel.x * me.timer.tick;
@@ -201,43 +204,41 @@ init: function(x, y, settings) {
         } else {
             this.renderable.setCurrentAnimation("idle");
         }
-         this.body.update(delta);
-         me.collision.check(this, true, this.collideHandler.bind(this), true);
+        if (this.health <= 0) {
+            me.game.world.removeChild(this);
+        }
+        this.now = new Date().getTime();
+
+        me.collision.check(this, true, this.collideHandler.bind(this), true);
+        
+        this.body.update(delta);
+
         this._super(me.Entity, "update", [delta]);
         return true;
-        this.attacking = me.input.isKeyPressed("attack");      
-      },
-      checkIfDead: function() {
-        if (this.health <= 0) {
-            return true;
-            //me.state.change(me.state.MENU);
-        }
-
-        return false;
     },
-    loseHealth: function(damage) {
-        this.health = this.health - damage;
-    },
+    
     collideHandler: function(response) {
-      if (response.b.type === 'player1') {
+        if (response.b.type === 'player1') {
             this.collideWithPlayer1(response);
         }
     },
-     collideWithPlayer1: function(response) {
+    
+    collideWithPlayer1: function(response) {
         var xdif = this.pos.x - response.b.pos.x;
         var ydif = this.pos.y - response.b.pos.y;
-        
-        console.log( xdif + this.facing);
-        if (xdif < 120) {
-            this.pos.x = this.pos.x + 1;
+
+        console.log(xdif + this.facing);
+        if (xdif < 90) {
+            this.pos.x = this.pos.x - 1;
             if (this.facing == "left") {
                 console.log("hihkhl");
                 this.body.vel.x = 0;
             }
-        } else {
+        }
+        if (xdif > -90) {
             this.pos.x = this.pos.x - 1;
             if (this.facing == "right") {
-                console.log( "gyusdfjys");
+                console.log("gyusdfjys");
                 this.body.vel.x = 0;
             }
         }
@@ -249,10 +250,10 @@ init: function(x, y, settings) {
             response.b.loseHealth(1);
         }
     }
-      
-  });
-  
-  game.HeroDeathManager = Object.extend({
+
+});
+
+game.HeroDeathManager = Object.extend({
     init: function(x, y, settings) {
         this.alwaysUpdate = true;
     },
