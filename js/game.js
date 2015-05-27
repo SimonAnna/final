@@ -5,14 +5,35 @@ var game = {
 	// an object where to store game information
 	data : {
 		// score
-		score : 0,
+			score : 0,
+                enemyBaseHealth: 10,
+                playerBaseHealth: 10,
+                enemyCreepHealth: 10,
                 playerHealth: 20,
+                player2Health: 20,
+                enemyCreepAttack: 1,
                 playerAttack: 1,
                 playerAttackTimer: 1000,
+                enemyCreepAttackTimer: 1000,
                 playerMoveSpeed: 5,
+                creepMoveSpeed: 5,
                 gameManager: "",
                 player: "",
+                exp: 0,
+                gold:1000000000000000000000,
+                s1:0,
+                s2:0,
+                s3:0,
+                s4:0,
+                s5:0,
+                s6:0,
+                exp1:0,
+                exp2:0,
+                exp3:0,
                 win:"",
+                pausePos: "",
+                buyscreen: "",
+                buytext: "",
                
                 
 	},
@@ -54,6 +75,7 @@ var game = {
             me.pool.register("player2", game.PlayerEntity2, true);
             me.pool.register("player", game.PlayerEntity, true);
             me.pool.register("HeroDeathManager", game.HeroDeathManager);
+            me.pool.register("GameManager", game.GameManager);
             
 		me.state.set(me.state.MENU, new game.TitleScreen());
 		me.state.set(me.state.PLAY, new game.PlayScreen());

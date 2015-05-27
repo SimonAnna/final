@@ -1,5 +1,6 @@
+
 <?php
-require_once("php/controller/create-db.php");
+require_once("Php/controller/create-db.php");
 ?>
 <html>
     <head>
@@ -71,6 +72,57 @@ require_once("php/controller/create-db.php");
                         window.scrollTo(0, 1);
                     });
                 }
+            });
+        </script>
+        <script>
+            $("#mainmenu").bind("click", function() {
+                me.state.change(me.state.MENU);
+            });
+            $("#register").bind("click", function() {
+            $.ajax({
+            type: "POST",
+                    url: "php/controller/create-user.php",
+                    data: {
+                    //passes username/password
+                    username: $("#username").val(),
+                            password: $("#password").val(),
+                    },
+                    dataType: "text"
+            })
+                    .success(function(response){
+                    if(response==="true"){
+                        me.state.change(me.state.PLAY);
+                    }else{
+                        alert(response);
+                    }
+                    })
+                    .fail(function(response){
+                        alert("fail");
+                    });
+            });
+            $("#load").bind("click", function() {
+            $.ajax({
+            type: "POST",
+                    url: "php/controller/login-user.php",
+                    data: {
+                    //passes username/password
+                    username: $("#username").val(),
+                            password: $("#password").val(),
+                    },
+                    dataType: "text"
+            })
+                    .success(function(response){
+                    if(response==="invalid username and password"){
+                        alert(response);
+                    }else{
+                        var data = jQuery.parseJSON(response);
+                        
+                        me.state.change(me.state.PLAY);
+                    }
+                    })
+                    .fail(function(response){
+                        alert("fail");
+                    });
             });
         </script>
     </body>

@@ -79,7 +79,7 @@ game.PlayerEntity = me.Entity.extend({
             this.renderable.setCurrentAnimation("idle");
         }
         if (this.health <= 0) {
-            me.game.world.removeChild(this);
+            me.state.change(me.state.MENU);
         }
         this.now = new Date().getTime();
 
@@ -205,7 +205,7 @@ game.PlayerEntity2 = me.Entity.extend({
             this.renderable.setCurrentAnimation("idle");
         }
         if (this.health <= 0) {
-            me.game.world.removeChild(this);
+            me.state.change(me.state.MENU);
         }
         this.now = new Date().getTime();
 
@@ -215,6 +215,7 @@ game.PlayerEntity2 = me.Entity.extend({
 
         this._super(me.Entity, "update", [delta]);
         return true;
+        
     },
     
     collideHandler: function(response) {
@@ -252,20 +253,5 @@ game.PlayerEntity2 = me.Entity.extend({
     }
 
 });
-
-game.HeroDeathManager = Object.extend({
-    init: function(x, y, settings) {
-        this.alwaysUpdate = true;
-    },
-    update: function() {
-        if (game.data.player.dead) {
-            me.game.world.removeChild(game.data.player);
-            me.state.current().resetPlayer(10, 0);
-        }
-        return true;
-    }
-});
-
-
 
 
