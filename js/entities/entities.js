@@ -9,6 +9,7 @@ game.PlayerEntity = me.Entity.extend({
                 getShape: function() {
                     return(new me.Rect(0, 0, 120, 120)).toPolygon();
                 }
+               
 
             }]);
         this.body.setVelocity(5, 20);
@@ -31,7 +32,9 @@ game.PlayerEntity = me.Entity.extend({
     },
     
     loseHealth: function(damage) {
+        console.log (this.health);
         this.health = this.health - damage;
+        
     },
     
     update: function(delta) {
@@ -79,7 +82,7 @@ game.PlayerEntity = me.Entity.extend({
             this.renderable.setCurrentAnimation("idle");
         }
         if (this.health <= 0) {
-            me.state.change(me.state.MENU);
+            me.state.change(me.state.P2);
         }
         this.now = new Date().getTime();
 
@@ -129,18 +132,18 @@ game.PlayerEntity2 = me.Entity.extend({
                 image: "player2",
                 width: 64,
                 height: 64,
-                spritewidth: "120",
-                spriteheight: "120",
+                spritewidth: "64",
+                spriteheight: "64",
                 getShape: function() {
-                    return(new me.Rect(0, 0, 120, 120)).toPolygon();
+                    return(new me.Rect(0, 0, 64, 64)).toPolygon();
                 }
 
             }]);
         this.body.setVelocity(5, 20);
 
-        this.renderable.addAnimation("idle", [0]);
-        this.renderable.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 80);
-        this.renderable.addAnimation("attack", [9, 10, 11, 12], 100);
+        this.renderable.addAnimation("idle", [13]);
+        this.renderable.addAnimation("walk", [ 121, 122, 123, 124], 100);
+        this.renderable.addAnimation("attack", [ 169, 170, 171,172,173], 80);
 
         this.renderable.setCurrentAnimation("idle");
 
@@ -163,12 +166,12 @@ game.PlayerEntity2 = me.Entity.extend({
     update: function(delta) {
         if (me.input.isKeyPressed("right2")) {
             //flip on x axis
-            this.flipX(false);
+            this.flipX(true);
             this.body.vel.x += this.body.accel.x * me.timer.tick;
             this.facing = "right";
             //move left
         } else if (me.input.isKeyPressed("left2")) {
-            this.flipX(true);
+            this.flipX(false);
             this.body.vel.x -= this.body.accel.x * me.timer.tick;
             this.facing = "left";
         } else {
@@ -205,7 +208,7 @@ game.PlayerEntity2 = me.Entity.extend({
             this.renderable.setCurrentAnimation("idle");
         }
         if (this.health <= 0) {
-            me.state.change(me.state.MENU);
+            me.state.change(me.state.P1);
         }
         this.now = new Date().getTime();
 
@@ -232,14 +235,14 @@ game.PlayerEntity2 = me.Entity.extend({
         if (xdif < 90) {
             this.pos.x = this.pos.x - 1;
             if (this.facing == "left") {
-                console.log("hihkhl");
+               
                 this.body.vel.x = 0;
             }
         }
         if (xdif > -90) {
             this.pos.x = this.pos.x - 1;
             if (this.facing == "right") {
-                console.log("gyusdfjys");
+               
                 this.body.vel.x = 0;
             }
         }

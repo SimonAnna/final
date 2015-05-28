@@ -55,6 +55,8 @@ var game = {
 	}
         me.state.LOAD = 113;
         me.state.NEW = 114;
+        me.state.P1 = 115;
+        me.state.P2 = 116;
 	// Initialize the audio.
 	me.audio.init("mp3,ogg");
 
@@ -81,7 +83,8 @@ var game = {
 		me.state.set(me.state.PLAY, new game.PlayScreen());
                 me.state.set(me.state.LOAD, new game.LoadProfile());
                 me.state.set(me.state.NEW, new game.NewProfile());
-
+                me.state.set(me.state.P2, new game.p2win());
+                me.state.set(me.state.P1, new game.p1win());
 		// Start the game.
 		me.state.change(me.state.MENU);
 	}

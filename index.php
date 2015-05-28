@@ -36,6 +36,7 @@ require_once("Php/controller/create-db.php");
             <button type="button" id="mainmenu">Main Menu</button>
 
         </form>
+        
 
       
         <script type="text/javascript" src="lib/melonJS-1.1.0-min.js"></script>
@@ -49,8 +50,11 @@ require_once("Php/controller/create-db.php");
          <script type="text/javascript" src="js/screens/title.js"></script>
         <script type="text/javascript" src="js/screens/newProfile.js"></script>
         <script type="text/javascript" src="js/screens/loadProfile.js"></script>
-        <script type="text/javascript">
-            window.onReady(function onReady() {
+        <script type="text/javascript" src="js/screens/p1win.js"></script>
+        <script type="text/javascript" src="js/screens/p2win.js"></script>
+        <script type="text/javascript" src="js/screens/select.js"></script>
+           <script type="text/javascript">
+           window.onReady(function onReady() {
                 game.onload();
 
                 // Mobile browser hacks

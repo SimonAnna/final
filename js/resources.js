@@ -9,7 +9,10 @@ game.resources = [
     {name: "loadpic", type: "image", src: "data/img/loadpic.png"},
     {name: "load", type: "image", src: "data/img/loadpic.png"},
     {name: "new", type: "image", src: "data/img/newpic.png"},
-    {name: "player2", type: "image", src: "data/img/sprieattack.png"},
+    {name: "player2", type: "image", src: "data/img/skeletonDagger.png"},
+    {name: "p1win", type: "image", src: "data/img/title.png"},
+    {name: "p2win", type: "image", src: "data/img/title.png"},
+    {name: "select", type: "image", src: "data/img/title.png"},
     /* Atlases 
      * @example
      * {name: "example_tps", type: "tps", src: "data/img/example_tps.json"},
