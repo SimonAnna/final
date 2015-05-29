@@ -1,4 +1,5 @@
 game.PlayerEntity = me.Entity.extend({
+    //most comments are in player 2 entity
     init: function(x, y, settings) {
         this._super(me.Entity, 'init', [x, y, {
                 //sets player hitbox and size
@@ -225,13 +226,14 @@ game.PlayerEntity2 = me.Entity.extend({
         return true;
         
     },
-    
+    //calls collision
     collideHandler: function(response) {
         if (response.b.type === 'player1') {
             this.collideWithPlayer1(response);
         }
     },
-    
+    //says if you hit the player stop and dont stick to the other playeer
+    //helps with attack
     collideWithPlayer1: function(response) {
         var xdif = this.pos.x - response.b.pos.x;
         var ydif = this.pos.y - response.b.pos.y;
