@@ -136,6 +136,7 @@ game.PlayerEntity2 = me.Entity.extend({
                 }
 
             }]);
+        //speed
         this.body.setVelocity(5, 20);
 
         this.renderable.addAnimation("idle", [13]);
