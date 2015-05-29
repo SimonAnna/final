@@ -4,6 +4,7 @@ require_once("Php/controller/create-db.php");
 ?>
 <html>
     <head>
+      <!--scripts that set up ajax and other things to help with game-->
         <title>melonJS Template</title>
         <link rel="stylesheet" type="text/css" media="screen" href="index.css">
         <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -21,6 +22,7 @@ require_once("Php/controller/create-db.php");
     <body>
         <!-- Canvas placeholder -->
         <div id="screen"></div>
+        <!--form to implement text feild and buttons-->
         <form id="input" method="post">
             <div class="field">
                 <label for="username">Username</label>
@@ -30,7 +32,7 @@ require_once("Php/controller/create-db.php");
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password">
             </div>
-
+            
             <button type="button" id="register">Register</button>
             <button type="button" id="load">Load</button>
             <button type="button" id="mainmenu">Main Menu</button>
