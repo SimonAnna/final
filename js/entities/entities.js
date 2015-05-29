@@ -122,7 +122,7 @@ game.PlayerEntity = me.Entity.extend({
     }
 
 });
-
+//coontrolls player 2 actions, collisions, size, attacks and movement, and other essentials
 game.PlayerEntity2 = me.Entity.extend({
     init: function(x, y, settings) {
         this._super(me.Entity, 'init', [x, y, {
