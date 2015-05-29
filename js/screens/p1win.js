@@ -1,3 +1,4 @@
+//player 1 win screen
 game.p1win = me.ScreenObject.extend({
 	/**	
 	 *  action to perform on state change

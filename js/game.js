@@ -4,7 +4,7 @@ var game = {
 
 	// an object where to store game information
 	data : {
-		// score
+            //global vaariables
 			score : 0,
                 enemyBaseHealth: 10,
                 playerBaseHealth: 10,
@@ -53,6 +53,7 @@ var game = {
 			me.plugin.register.defer(this, debugPanel, "debug");
 		});
 	}
+        //states
         me.state.LOAD = 113;
         me.state.NEW = 114;
         me.state.P1 = 115;
