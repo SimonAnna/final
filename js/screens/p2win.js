@@ -1,8 +1,8 @@
 //player 2 win screen
 game.p2win = me.ScreenObject.extend({
-	/**	
-	 *  action to perform on state change
-	 */
+		
+	 //  action to perform on state change
+	 
 	onResetEvent: function() {	
 		me.game.world.addChild(new me.Sprite(0, 0, me.loader.getImage("p2win")),-10);
                 document.getElementById("mainmenu").style.visibility = "visible";
@@ -33,9 +33,9 @@ game.p2win = me.ScreenObject.extend({
 	
              
 	
-	/**	
-	 *  action to perform when leaving this screen (state change)
-	 */
+		
+            // action to perform when leaving this screen (state change)
+	
 	onDestroyEvent: function() {
 		document.getElementById("mainmenu").style.visibility = "hidden";
 	}
