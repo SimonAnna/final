@@ -138,30 +138,34 @@ game.PlayerEntity2 = me.Entity.extend({
             }]);
         //speed
         this.body.setVelocity(5, 20);
-
+                //adds animation
         this.renderable.addAnimation("idle", [13]);
         this.renderable.addAnimation("walk", [ 121, 122, 123, 124], 100);
         this.renderable.addAnimation("attack", [ 169, 170, 171,172,173], 80);
-
+        //sets animation
         this.renderable.setCurrentAnimation("idle");
-
+        //facing
         this.facing = "left";
+        //says not dead
         this.dead = false;
+        //not attacking
         this.attacking = false;
-
+        //health
         this.health = 20;
-
+        //timers
         this.now = new Date().getTime();
         this.lastHit = this.now;
         this.lastAttack = new Date().getTime();
+                //sets player2
         this.type = "player2"
     },
-    
+    //controlls damage taken
     loseHealth: function(damage) {
         this.health = this.health - damage;
     },
-    
+    //controlls things needed updated
     update: function(delta) {
+        //move right
         if (me.input.isKeyPressed("right2")) {
             //flip on x axis
             this.flipX(true);
@@ -196,20 +200,23 @@ game.PlayerEntity2 = me.Entity.extend({
                 this.renderable.setAnimationFrame();
             }
         }
-
+        //helps with attack animation
         else if (this.body.vel.x !== 0) {
             if (!this.renderable.isCurrentAnimation("walk")) {
                 this.renderable.setCurrentAnimation("walk");
 
             }
         } else {
+            //if not walking or aattacking set animation to idle
             this.renderable.setCurrentAnimation("idle");
         }
+        //sets dead
         if (this.health <= 0) {
             me.state.change(me.state.P1);
         }
+        //timer
         this.now = new Date().getTime();
-
+        //calls collision
         me.collision.check(this, true, this.collideHandler.bind(this), true);
         
         this.body.update(delta);
