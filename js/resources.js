@@ -2,9 +2,12 @@ game.resources = [
     /* Graphics. 
      * @example
      * {name: "example", type:"image", src: "data/img/example.png"},
+     * 
+     *all the art in the game
      */{name: "background-tiles", type: "image", src: "data/img/background-tiles.png"},
     {name: "meta-tiles", type: "image", src: "data/img/meta-tiles.png"},
-    {name: "player", type: "image", src: "data/img/sprieattack.png"},
+    {name: "large", type: "image", src: "data/img/large.gif"},
+    {name: "player", type: "image", src: "data/img/sprite.png"},
     {name: "title", type: "image", src: "data/img/title_1.png"},
     {name: "loadpic", type: "image", src: "data/img/loadpic.png"},
     {name: "load", type: "image", src: "data/img/loadpic.png"},

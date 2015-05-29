@@ -1,13 +1,14 @@
 game.PlayerEntity = me.Entity.extend({
     init: function(x, y, settings) {
         this._super(me.Entity, 'init', [x, y, {
+                //sets player hitbox and size
                 image: "player",
                 width: 64,
                 height: 64,
-                spritewidth: "120",
-                spriteheight: "120",
+                spritewidth: "64",
+                spriteheight: "64",
                 getShape: function() {
-                    return(new me.Rect(0, 0, 120, 120)).toPolygon();
+                    return(new me.Rect(0, 0, 64, 64)).toPolygon();
                 }
                
 
@@ -16,12 +17,12 @@ game.PlayerEntity = me.Entity.extend({
         this.health = 20;
 
         this.type = "player1";
-        this.renderable.addAnimation("idle", [0]);
-        this.renderable.addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7, 8], 80);
-        this.renderable.addAnimation("attack", [9, 10, 11, 12], 100);
+        this.renderable.addAnimation("idle", [13]);
+        this.renderable.addAnimation("walk", [ 121, 122, 123, 124], 100);
+        this.renderable.addAnimation("attack", [ 169, 170, 171,172,173], 80);
 
         this.renderable.setCurrentAnimation("idle");
-
+        this.flipX(true);
         this.facing = "right";
         this.dead = false;
         this.attacking = false;
@@ -40,12 +41,12 @@ game.PlayerEntity = me.Entity.extend({
     update: function(delta) {
         if (me.input.isKeyPressed("right")) {
             //flip on x axis
-            this.flipX(false);
+            this.flipX(true);
             this.body.vel.x += this.body.accel.x * me.timer.tick;
             this.facing = "right";
             //move left
         } else if (me.input.isKeyPressed("left")) {
-            this.flipX(true);
+            this.flipX(false);
             this.body.vel.x -= this.body.accel.x * me.timer.tick;
             this.facing = "left";
         } else {
@@ -103,17 +104,13 @@ game.PlayerEntity = me.Entity.extend({
     collideWithPlayer2: function(response) {
         var xdif = this.pos.x - response.b.pos.x;
         var ydif = this.pos.y - response.b.pos.y;
-        if (xdif < 90) {
-            this.pos.x = this.pos.x + 1;
-            if (this.facing === "left") {
-                this.body.vel.x = 0;
-            }
-        }
-        if (xdif > -90) {
+        if (xdif < 90 && this.facing === 'right' && (xdif < 0)) {
+            this.body.vel.x = 0;
             this.pos.x = this.pos.x - 1;
-            if (this.facing === "right") {
-                this.body.vel.x = 0;
             }
+        if (xdif > -90 && this.facing === 'left' && (xdif > 0)) {
+            this.body.vel.x = 0;
+            this.pos.x = this.pos.x + 1;
         }
         if (this.renderable.isCurrentAnimation("attack") && this.now - this.lastHit >= 1000
                 && (Math.abs(ydif) <= 40 &&
@@ -231,20 +228,13 @@ game.PlayerEntity2 = me.Entity.extend({
         var xdif = this.pos.x - response.b.pos.x;
         var ydif = this.pos.y - response.b.pos.y;
 
-        console.log(xdif + this.facing);
-        if (xdif < 90) {
+        if (xdif < 90 && this.facing === 'right' && (xdif < 0)) {
+            this.body.vel.x = 0;
             this.pos.x = this.pos.x - 1;
-            if (this.facing == "left") {
-               
-                this.body.vel.x = 0;
             }
-        }
-        if (xdif > -90) {
-            this.pos.x = this.pos.x - 1;
-            if (this.facing == "right") {
-               
-                this.body.vel.x = 0;
-            }
+        if (xdif > -90 && this.facing === 'left' && (xdif > 0)) {
+            this.body.vel.x = 0;
+            this.pos.x = this.pos.x + 1;
         }
         if (this.renderable.isCurrentAnimation("attack") && this.now - this.lastHit >= 1000
                 && (Math.abs(ydif) <= 40 &&
